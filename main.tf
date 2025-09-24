@@ -10,6 +10,19 @@ resource "aws_s3_bucket" "bucket" {
   tags = var.tags
 }
 
+# CORS 
+resource "aws_s3_bucket_cors_configuration" "this" {
+  bucket = aws_s3_bucket.bucket.bucket
+
+  cors_rule {
+    allowed_headers = ["*"]
+    allowed_methods = ["GET"]
+    allowed_origins = ["*"]
+    expose_headers  = ["*"]
+    max_age_seconds = 3000
+  }
+}
+
 # Ensure no public access is possible
 resource "aws_s3_bucket_public_access_block" "bucket" {
   bucket = aws_s3_bucket.bucket.id
