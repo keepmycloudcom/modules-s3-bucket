@@ -2,6 +2,7 @@
 variable "name"   { type = string }
 variable "tags"   { type = map(string) }
 variable "bucket" { type = string }
+variable "project_domain" { type = string }
 
 ### S3 Bucket
 resource "aws_s3_bucket" "bucket" {
@@ -17,7 +18,7 @@ resource "aws_s3_bucket_cors_configuration" "this" {
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
-    allowed_origins = ["*"]
+    allowed_origins = ["https://${var.project_domain}"]
     expose_headers  = ["*"]
     max_age_seconds = 3000
   }
